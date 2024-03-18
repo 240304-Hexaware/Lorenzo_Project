@@ -26,6 +26,14 @@ public class Metadata {
         this.parsedDataId = parsedDataId;
     }
 
+    public Metadata(String userId, String flatFilePath, String specId, String parsedDataId) {
+        this.userId = userId;
+        this.flatFilePath = flatFilePath;
+        this.uploadDate = new Date();
+        this.specId = specId;
+        this.parsedDataId = parsedDataId;
+    }
+
     public Metadata(String id, String userId, String flatFilePath, Date uploadDate, String specId, String parsedDataId) {
         this.id = id;
         this.userId = userId;

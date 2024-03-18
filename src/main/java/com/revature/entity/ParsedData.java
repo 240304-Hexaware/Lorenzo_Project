@@ -7,15 +7,12 @@ public class ParsedData {
 
     @Id
     private String id;
-    private String metaId;
-    private String parsedData;
+    private Object parsedData;
 
     public ParsedData() {
     }
 
-    public ParsedData(String id, String metaId, String parsedData) {
-        this.id = id;
-        this.metaId = metaId;
+    public ParsedData(Object parsedData) {
         this.parsedData = parsedData;
     }
 
@@ -23,11 +20,8 @@ public class ParsedData {
         return id;
     }
 
-    public String getMetaId() {
-        return metaId;
-    }
 
-    public String getParsedData() {
+    public Object getParsedData() {
         return parsedData;
     }
 }

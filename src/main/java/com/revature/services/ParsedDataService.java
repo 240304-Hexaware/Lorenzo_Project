@@ -59,6 +59,13 @@ public class ParsedDataService {
         Metadata metadata = metadataRepository.save(bindMetadata);
 
         parsedData.setMetadataId(metadata.getId());
+
+        return parsedDataRepository.save(dataToBeParsed);
+    }
+
+    public ParsedData getParsedData(String parsedId) throws Exception {
+        ParsedData parsedData = parsedDataRepository.findById(parsedId)
+                .orElseThrow(() -> new Exception("Id not found"));
         return parsedData;
     }
 

@@ -14,10 +14,7 @@ import org.json.JSONObject;
 import org.springframework.data.mongodb.core.query.Meta;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +22,7 @@ import java.util.Map;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/file")
+@RequestMapping("/api/parse")
 public class FileParsingController {
 
     private final ParsedDataService parsedDataService;
@@ -35,8 +32,13 @@ public class FileParsingController {
         this.parsedDataService = parsedDataService;
     }
 
-    @PostMapping("/parse")
+    @PostMapping("/")
     public ParsedData parseFile(@RequestBody SpecificationRequest request) throws Exception {
         return parsedDataService.parse(request);
+    }
+
+    @GetMapping("/{parsedId}")
+    public ParsedData getParsedData(@PathVariable String parsedId) throws Exception{
+        return parsedDataService.getParsedData(parsedId);
     }
 }

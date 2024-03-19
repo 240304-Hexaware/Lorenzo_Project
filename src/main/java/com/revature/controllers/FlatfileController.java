@@ -1,22 +1,21 @@
 package com.revature.controllers;
 
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/upload")
-public class FlatfileUploadController {
+@RequestMapping("/api/flatfile")
+public class FlatfileController {
 
-    @PostMapping("/file")
+    @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
 
         if (file.isEmpty()) {
@@ -26,7 +25,6 @@ public class FlatfileUploadController {
             // Get the file name
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
-            // Create a directory to store files if it doesn't exist
             File directory = new File("uploads");
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -41,4 +39,26 @@ public class FlatfileUploadController {
             return "Failed to upload file: " + e.getMessage();
         }
     }
+
+    @GetMapping
+    public List<String> getAllFiles() {
+        List<String> files = new ArrayList<>();
+
+        String folderPath = "uploads";
+
+        // Get all files in the folder
+        File folder = new File(folderPath);
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    files.add(file.getName());
+                }
+            }
+        }
+
+        return files;
+    }
+
 }

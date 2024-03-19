@@ -32,7 +32,7 @@ public class ParsedDataService {
         this.metadataRepository = metadataRepository;
     }
 
-    public Metadata parse(SpecificationRequest request) throws Exception{
+    public ParsedData parse(SpecificationRequest request) throws Exception{
         String specificationId = request.getSpecificationId();
         Specification specification = specificationRepository.findById(specificationId)
                 .orElseThrow(() -> new Exception("Specification not found"));
@@ -54,9 +54,12 @@ public class ParsedDataService {
         }
         ParsedData dataToBeParsed = new ParsedData(jsonObject.toMap());
         ParsedData parsedData = parsedDataRepository.save(dataToBeParsed);
-        Metadata metadata = new Metadata(specification.getUserId(), path, specificationId, parsedData.getId());
 
-        return metadataRepository.save(metadata);
+        Metadata bindMetadata = new Metadata(specification.getUserId(), path, specificationId, parsedData.getId());
+        Metadata metadata = metadataRepository.save(bindMetadata);
+
+        parsedData.setMetadataId(metadata.getId());
+        return parsedData;
     }
 
 }

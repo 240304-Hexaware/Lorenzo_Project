@@ -11,6 +11,7 @@ import com.revature.services.SpecificationService;
 import com.revature.util.FileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
+import org.springframework.data.mongodb.core.query.Meta;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +36,7 @@ public class FileParsingController {
     }
 
     @PostMapping("/parse")
-    public Metadata parseFile(@RequestBody SpecificationRequest request) throws Exception {
+    public ParsedData parseFile(@RequestBody SpecificationRequest request) throws Exception {
         return parsedDataService.parse(request);
     }
 }

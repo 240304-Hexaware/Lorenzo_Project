@@ -7,12 +7,17 @@ public class ParsedData {
 
     @Id
     private String id;
+    private String metadataId;
     private Object parsedData;
 
     public ParsedData() {
     }
 
     public ParsedData(Object parsedData) {
+        this.parsedData = parsedData;
+    }
+    public ParsedData(String metadataId, Object parsedData){
+        this.metadataId = metadataId;
         this.parsedData = parsedData;
     }
 
@@ -23,5 +28,13 @@ public class ParsedData {
 
     public Object getParsedData() {
         return parsedData;
+    }
+
+    public void setMetadataId(String metadataId) {
+        this.metadataId = metadataId;
+    }
+
+    public String getMetadataId() {
+        return metadataId;
     }
 }

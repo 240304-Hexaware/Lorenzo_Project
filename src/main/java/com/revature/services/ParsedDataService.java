@@ -37,7 +37,8 @@ public class ParsedDataService {
         Specification specification = specificationRepository.findById(specificationId)
                 .orElseThrow(() -> new Exception("Specification not found"));
 
-        String path = "/Users/user/IdeaProjects/Lorenzo_Project/flatfile.txt";
+//        String path = "/Users/user/IdeaProjects/Lorenzo_Project/uploads/flatfile.txt";
+        String path = request.getPath();
 
         File flatFile = new File(path); // Assuming flat file path
 

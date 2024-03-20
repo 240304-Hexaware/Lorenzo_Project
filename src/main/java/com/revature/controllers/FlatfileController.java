@@ -1,10 +1,14 @@
 package com.revature.controllers;
 
+import com.revature.services.FlatfileService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,50 +19,42 @@ import java.util.List;
 @RequestMapping("/api/flatfile")
 public class FlatfileController {
 
+    private final FlatfileService flatfileService;
+
+    public FlatfileController(FlatfileService flatfileService){
+        this.flatfileService = flatfileService;
+    }
+
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
-
-        if (file.isEmpty()) {
-            return "Please select a file to upload.";
-        }
-        try {
-            // Get the file name
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-            File directory = new File("uploads");
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
-
-            // Save the file to the uploads directory
-            Path filePath = Paths.get("uploads", fileName);
-            Files.write(filePath, file.getBytes());
-
-            return "File uploaded successfully: " + fileName;
-        } catch (Exception e) {
-            return "Failed to upload file: " + e.getMessage();
-        }
+        return flatfileService.uploadFile(file);
     }
 
     @GetMapping
     public List<String> getAllFiles() {
-        List<String> files = new ArrayList<>();
+//        List<String> files = new ArrayList<>();
+//
+//        String folderPath = "uploads";
+//
+//        // Get all files in the folder
+//        File folder = new File(folderPath);
+//        File[] listOfFiles = folder.listFiles();
+//
+//        if (listOfFiles != null) {
+//            for (File file : listOfFiles) {
+//                if (file.isFile()) {
+//                    files.add(file.getName());
+//                }
+//            }
+//        }
+//
+//        return files;
+        return flatfileService.getAllFiles();
+    }
 
-        String folderPath = "uploads";
-
-        // Get all files in the folder
-        File folder = new File(folderPath);
-        File[] listOfFiles = folder.listFiles();
-
-        if (listOfFiles != null) {
-            for (File file : listOfFiles) {
-                if (file.isFile()) {
-                    files.add(file.getName());
-                }
-            }
-        }
-
-        return files;
+    @GetMapping("/download/{filename}")
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable String filename) throws IOException {
+        return flatfileService.downloadFile(filename);
     }
 
 }

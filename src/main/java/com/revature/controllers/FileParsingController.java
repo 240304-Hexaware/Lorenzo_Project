@@ -32,7 +32,7 @@ public class FileParsingController {
         this.parsedDataService = parsedDataService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ParsedData parseFile(@RequestBody SpecificationRequest request) throws Exception {
         return parsedDataService.parse(request);
     }

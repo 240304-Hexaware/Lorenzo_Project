@@ -32,23 +32,6 @@ public class FlatfileController {
 
     @GetMapping
     public List<String> getAllFiles() {
-//        List<String> files = new ArrayList<>();
-//
-//        String folderPath = "uploads";
-//
-//        // Get all files in the folder
-//        File folder = new File(folderPath);
-//        File[] listOfFiles = folder.listFiles();
-//
-//        if (listOfFiles != null) {
-//            for (File file : listOfFiles) {
-//                if (file.isFile()) {
-//                    files.add(file.getName());
-//                }
-//            }
-//        }
-//
-//        return files;
         return flatfileService.getAllFiles();
     }
 

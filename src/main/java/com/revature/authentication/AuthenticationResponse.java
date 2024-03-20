@@ -15,10 +15,21 @@ import java.util.List;
 public class AuthenticationResponse {
     private String token;
     private List<String> errors;
+    private String userId;
     public AuthenticationResponse(String token, String error) {
         this.token = token;
         this.errors = new ArrayList<>();
         this.errors.add(error);
     }
+    public AuthenticationResponse(String token, String error, String userId) {
+        this.token = token;
+        this.errors = new ArrayList<>();
+        this.errors.add(error);
+        this.userId = userId;
+    }
 
+    public AuthenticationResponse(String token, List<String> errors) {
+       this.token = token;
+       this.errors = errors;
+    }
 }

@@ -27,13 +27,19 @@ public class SpecificationController {
         this.specificationService = specificationService;
     }
 
-    @PostMapping
-    public ResponseEntity<Specification> postSpecification(@RequestBody Specification specification) {
-        return specificationService.createSpecification(specification);
+    @PostMapping("/upload/{userId}")
+    public ResponseEntity<Specification> postSpecification(@RequestBody Specification specification, @PathVariable String userId) {
+        return specificationService.createSpecification(specification, userId);
     }
 
     @GetMapping("/{specName}")
     public Specification getSpecification(@PathVariable String specName) throws Exception{
         return specificationService.findByName(specName);
     }
+
+    @GetMapping("/all/{userId}")
+    public List<Specification> getAllSpecifications(@PathVariable String userId) throws Exception{
+        return  specificationService.getAllSpecifications(userId);
+    }
+
 }

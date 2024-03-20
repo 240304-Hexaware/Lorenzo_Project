@@ -21,6 +21,11 @@ public class Specification {
     public Specification() {
     }
 
+    public Specification(String specName, Map<String, Field> specs){
+        this.specName = specName;
+        this.specs = specs;
+    }
+
     public Specification(String id, String userId, String specName, Map<String, Field> specs){
         this.id = id;
         this.userId = userId;
@@ -42,5 +47,9 @@ public class Specification {
 
     public Map<String, Field> getSpecs() {
         return specs;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

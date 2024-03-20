@@ -56,7 +56,7 @@ public class ParsedDataService {
         ParsedData dataToBeParsed = new ParsedData(jsonObject.toMap());
         ParsedData parsedData = parsedDataRepository.save(dataToBeParsed);
 
-        Metadata bindMetadata = new Metadata(specification.getUserId(), path, specificationId, parsedData.getId());
+        Metadata bindMetadata = new Metadata(request.getUserId(), path, specificationId, parsedData.getId());
         Metadata metadata = metadataRepository.save(bindMetadata);
 
         parsedData.setMetadataId(metadata.getId());
@@ -65,6 +65,7 @@ public class ParsedDataService {
     }
 
     public ParsedData getParsedData(String parsedId) throws Exception {
+
         ParsedData parsedData = parsedDataRepository.findById(parsedId)
                 .orElseThrow(() -> new Exception("Id not found"));
         return parsedData;

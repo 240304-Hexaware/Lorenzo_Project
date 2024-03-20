@@ -39,10 +39,11 @@ public class AuthenticationService {
                 .isAccountDisabled(request.getIsAccountDisabled())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
-        repository.save(user);
+        User tempUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
-        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder().token(jwtToken).build();
+//        AuthenticationResponse authenticationResponse = AuthenticationResponse.builder().token(jwtToken).build();
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwtToken, (String) null, tempUser.getId()); // Set userId
         return ResponseEntity.ok(authenticationResponse);
     }
 
@@ -64,7 +65,9 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         var jwtToken = jwtService.generateToken(user);
 
-        return ResponseEntity.ok().body(AuthenticationResponse.builder().token(jwtToken).build());
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse(jwtToken, (String) null, user.getId()); // Set userId
+
+        return ResponseEntity.ok(authenticationResponse);
     }
 
 
